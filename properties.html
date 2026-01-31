@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Properties - Dom Expert | Buy & Rent in New York</title>
+  <meta name="description" content="Browse premium properties for sale and rent across New York City. Apartments, penthouses, townhouses, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span>Dom&nbsp;</span><span>Expert</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="properties.html" class="active">Properties</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="tel:+12125551234" class="nav-phone">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (212) 555-1234
+        </a>
+        <a href="contact.html" class="btn btn-primary btn-sm">Free Consultation</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="properties.html">Properties</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="btn btn-primary">Free Consultation</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>Our Properties</h1>
+    <p>Discover premium real estate across New York City</p>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span style="color: var(--white);">Properties</span>
+    </div>
+  </div>
+
+  <!-- PROPERTIES LISTING -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Filters -->
+      <div class="filters-bar" id="filtersBar">
+        <div class="filter-group">
+          <label>Type</label>
+          <select id="filterType">
+            <option value="">Buy & Rent</option>
+            <option value="sale">For Sale</option>
+            <option value="rent">For Rent</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Location</label>
+          <select id="filterLocation">
+            <option value="">All Locations</option>
+            <option value="manhattan">Manhattan</option>
+            <option value="brooklyn">Brooklyn</option>
+            <option value="queens">Queens</option>
+            <option value="bronx">Bronx</option>
+            <option value="staten-island">Staten Island</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Property</label>
+          <select id="filterProperty">
+            <option value="">All Types</option>
+            <option value="apartment">Apartment</option>
+            <option value="penthouse">Penthouse</option>
+            <option value="townhouse">Townhouse</option>
+            <option value="condo">Condo</option>
+            <option value="loft">Loft</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Price Range</label>
+          <select id="filterPrice">
+            <option value="">Any Price</option>
+            <option value="0-500000">Under $500K</option>
+            <option value="500000-1000000">$500K - $1M</option>
+            <option value="1000000-2000000">$1M - $2M</option>
+            <option value="2000000-5000000">$2M - $5M</option>
+            <option value="5000000+">$5M+</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Bedrooms</label>
+          <select id="filterBeds">
+            <option value="">Any</option>
+            <option value="0">Studio</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+        <button class="filter-btn" onclick="filterProperties()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search
+        </button>
+      </div>
+
+      <!-- Results Info -->
+      <div class="results-info">
+        <p>Showing <strong>12</strong> properties</p>
+        <select class="sort-select">
+          <option>Sort by: Newest</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Size: Largest</option>
+        </select>
+      </div>
+
+      <!-- Properties Grid -->
+      <div class="properties-grid" id="propertiesGrid">
+
+        <!-- Property 1 -->
+        <a href="property-detail.html" class="property-card" data-type="sale" data-location="manhattan" data-property="apartment" data-price="1250000" data-beds="3">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop" alt="Luxury apartment with terrace" loading="lazy">
+            <span class="property-badge badge-sale">For Sale</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$1,250,000</div>
+            <div class="property-title">Luxury Apartment with Terrace</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Upper East Side, Manhattan
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                1,200 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                3 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Terrace
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 2 -->
+        <a href="property-detail.html" class="property-card" data-type="sale" data-location="brooklyn" data-property="townhouse" data-price="3500000" data-beds="5">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop" alt="Modern townhouse" loading="lazy">
+            <span class="property-badge badge-sale">For Sale</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$3,500,000</div>
+            <div class="property-title">Modern Townhouse with Garden</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Park Slope, Brooklyn
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                3,200 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                5 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Garden
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 3 -->
+        <a href="property-detail.html" class="property-card" data-type="rent" data-location="manhattan" data-property="apartment" data-price="5500" data-beds="2">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop" alt="Elegant downtown apartment" loading="lazy">
+            <span class="property-badge badge-rent">For Rent</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$5,500 <span class="period">/ month</span></div>
+            <div class="property-title">Elegant Downtown Apartment</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              SoHo, Manhattan
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                950 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                2 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Available Now
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 4 -->
+        <a href="property-detail.html" class="property-card" data-type="sale" data-location="manhattan" data-property="apartment" data-price="890000" data-beds="1">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop" alt="Cozy apartment" loading="lazy">
+            <span class="property-badge badge-sale">For Sale</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$890,000</div>
+            <div class="property-title">Cozy Pre-War Studio in Midtown</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Midtown West, Manhattan
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                750 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                1 Bed
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Doorman
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 5 -->
+        <a href="property-detail.html" class="property-card" data-type="rent" data-location="manhattan" data-property="loft" data-price="8000" data-beds="3">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop" alt="Spacious loft" loading="lazy">
+            <span class="property-badge badge-rent">For Rent</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$8,000 <span class="period">/ month</span></div>
+            <div class="property-title">Spacious Loft in Tribeca</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Tribeca, Manhattan
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                2,100 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                3 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                Open Floor
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 6 -->
+        <a href="property-detail.html" class="property-card" data-type="sale" data-location="brooklyn" data-property="penthouse" data-price="2100000" data-beds="3">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&h=400&fit=crop" alt="Penthouse" loading="lazy">
+            <span class="property-badge badge-sale">For Sale</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$2,100,000</div>
+            <div class="property-title">Penthouse with Skyline Views</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Williamsburg, Brooklyn
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                1,800 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                3 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Rooftop
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 7 -->
+        <a href="property-detail.html" class="property-card" data-type="sale" data-location="manhattan" data-property="condo" data-price="4750000" data-beds="4">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=400&fit=crop" alt="Central Park condo" loading="lazy">
+            <span class="property-badge badge-sale">For Sale</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$4,750,000</div>
+            <div class="property-title">Central Park View Condo</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Upper West Side, Manhattan
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                2,800 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                4 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Concierge
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 8 -->
+        <a href="property-detail.html" class="property-card" data-type="rent" data-location="brooklyn" data-property="apartment" data-price="3200" data-beds="1">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1598928506311-c55ez361a342?w=600&h=400&fit=crop" alt="Brooklyn apartment" loading="lazy">
+            <span class="property-badge badge-rent">For Rent</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$3,200 <span class="period">/ month</span></div>
+            <div class="property-title">Sunny Brooklyn Heights Studio</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Brooklyn Heights, Brooklyn
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                650 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                1 Bed
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Available Now
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 9 -->
+        <a href="property-detail.html" class="property-card" data-type="sale" data-location="queens" data-property="townhouse" data-price="1650000" data-beds="4">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=600&h=400&fit=crop" alt="Queens townhouse" loading="lazy">
+            <span class="property-badge badge-sale">For Sale</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$1,650,000</div>
+            <div class="property-title">Family Townhouse in Astoria</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Astoria, Queens
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                2,400 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                4 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Backyard
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 10 -->
+        <a href="property-detail.html" class="property-card" data-type="rent" data-location="manhattan" data-property="penthouse" data-price="15000" data-beds="3">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop" alt="Luxury penthouse" loading="lazy">
+            <span class="property-badge badge-rent">For Rent</span>
+            <span class="property-badge badge-featured" style="left: auto; right: 56px;">Featured</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$15,000 <span class="period">/ month</span></div>
+            <div class="property-title">Luxury Penthouse on Fifth Ave</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Fifth Avenue, Manhattan
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                3,500 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                3 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Sky Terrace
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 11 -->
+        <a href="property-detail.html" class="property-card" data-type="sale" data-location="manhattan" data-property="apartment" data-price="725000" data-beds="0">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=600&h=400&fit=crop" alt="Chelsea studio" loading="lazy">
+            <span class="property-badge badge-sale">For Sale</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$725,000</div>
+            <div class="property-title">Modern Studio in Chelsea</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Chelsea, Manhattan
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                520 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                Studio
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Laundry
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Property 12 -->
+        <a href="property-detail.html" class="property-card" data-type="rent" data-location="queens" data-property="apartment" data-price="2800" data-beds="2">
+          <div class="property-image">
+            <img src="https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=600&h=400&fit=crop" alt="Queens apartment" loading="lazy">
+            <span class="property-badge badge-rent">For Rent</span>
+            <span class="property-favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+          </div>
+          <div class="property-info">
+            <div class="property-price">$2,800 <span class="period">/ month</span></div>
+            <div class="property-title">Bright 2BR in Long Island City</div>
+            <div class="property-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Long Island City, Queens
+            </div>
+            <div class="property-features">
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                900 sqft
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M21 7H3V4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3z"/></svg>
+                2 Beds
+              </div>
+              <div class="property-feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>
+                City Views
+              </div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <a href="#">&larr;</a>
+        <span class="active">1</span>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">&rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="logo">
+            <span>Dom&nbsp;</span><span>Expert</span>
+          </div>
+          <p>New York's trusted real estate partner. We help you buy, sell, and rent premium properties across all five boroughs.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" aria-label="Twitter"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <a href="properties.html">Properties</a>
+          <a href="services.html">Services</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-column">
+          <h3>Property Types</h3>
+          <a href="properties.html">Apartments</a>
+          <a href="properties.html">Penthouses</a>
+          <a href="properties.html">Townhouses</a>
+          <a href="properties.html">Condos</a>
+          <a href="properties.html">Lofts</a>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Info</h3>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>350 Fifth Avenue, Suite 4500<br>New York, NY 10118</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>(212) 555-1234</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>info@domexpert.online</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Dom Expert. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
