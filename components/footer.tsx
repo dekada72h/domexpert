@@ -61,7 +61,21 @@ export function Footer() {
       <div className="border-t border-cream/10">
         <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-cream/50">
           <span>© {new Date().getFullYear()} Dom Expert. Wszystkie prawa zastrzeżone.</span>
-          <span>Polityka prywatności · Regulamin</span>
+          <span className="flex items-center gap-3">
+            <span>Polityka prywatności · Regulamin</span>
+            <span className="text-cream/30">·</span>
+            <span>
+              Strona stworzona przez{" "}
+              <a
+                href="https://dekada72h.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary-light hover:text-secondary transition-colors font-medium"
+              >
+                Dekada72H
+              </a>
+            </span>
+          </span>
         </div>
       </div>
     </footer>
