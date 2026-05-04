@@ -1,0 +1,136 @@
+name: Monthly deps bump
+
+on:
+  schedule:
+    - cron: "47 7 1 * *"   # 1st of month, 09:47 Warsaw (Europe/Warsaw is UTC+2 in summer; GHA uses UTC)
+  workflow_dispatch:
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Configure git
+        run: |
+          git config user.name  "deps-bot"
+          git config user.email "deps-bot@dekada72h.com"
+
+      - name: Detect minor + patch updates
+        id: check
+        run: |
+          set -euo pipefail
+          BRANCH="deps/$(date -u +%Y-%m)"
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
+          # Skip if branch already exists (PR open from previous attempt)
+          if git ls-remote --heads origin "$BRANCH" | grep -q "$BRANCH"; then
+            echo "Branch $BRANCH already exists on remote — skipping"
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          npx --yes npm-check-updates --target minor --jsonUpgraded > /tmp/minor.json
+          if [ "$(cat /tmp/minor.json)" = "{}" ]; then
+            echo "No minor/patch updates available."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "Updates:"
+            cat /tmp/minor.json
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Apply bump + verify build
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          npx --yes npm-check-updates --target minor -u
+          npm install
+          npx tsc --noEmit
+          npx next build
+          test -f out/index.html
+          test -f out/properties/index.html
+
+      - name: Detect major bumps for PR body
+        if: steps.check.outputs.skip != 'true'
+        id: majors
+        run: |
+          set -euo pipefail
+          npx --yes npm-check-updates --target latest --jsonUpgraded > /tmp/latest.json
+          # Diff: filter out keys already in /tmp/minor.json, leaving only majors
+          node -e '
+            const m = require("/tmp/minor.json");
+            const l = require("/tmp/latest.json");
+            const majors = {};
+            for (const k of Object.keys(l)) if (!(k in m)) majors[k] = l[k];
+            const lines = Object.entries(majors).map(([k,v]) => "- `" + k + "` → " + v);
+            require("fs").writeFileSync("/tmp/majors.md", lines.length ? lines.join("\n") : "_(none)_");
+          '
+          {
+            echo "majors<<EOF"
+            cat /tmp/majors.md
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Open PR
+        if: steps.check.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.check.outputs.branch }}
+          MAJORS: ${{ steps.majors.outputs.majors }}
+        run: |
+          set -euo pipefail
+          git checkout -b "$BRANCH"
+          git add package.json package-lock.json
+          git commit -m "chore(deps): monthly minor+patch bump $(date -u +%Y-%m)"
+          git push -u origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" \
+            --title "chore(deps): monthly bump $(date -u +%Y-%m)" \
+            --body "$(cat <<EOF
+          ## Automated monthly dep bump
+
+          Minor + patch versions only — see commit diff for the full list.
+
+          Build verification:
+          - \`tsc --noEmit\` passed
+          - \`next build\` succeeded
+          - \`out/index.html\` + \`out/properties/index.html\` produced
+
+          ### Major bumps available (manual review required)
+          $MAJORS
+
+          ---
+          After merge, the \`Build & Deploy\` workflow runs automatically and smoke-tests https://domexpert.online/.
+          EOF
+          )"
+
+  notify-failure:
+    needs: bump
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Discord notification
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          GH_REPO: ${{ github.repository }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_BRANCH: ${{ github.ref_name }}
+          GH_SHA: ${{ github.sha }}
+          GH_ACTOR: ${{ github.actor }}
+          ICON: "🛠️"
+          TITLE: "DomExpert deps-bump failed"
+          SUBTITLE: "Monthly minor/patch bump didn't pass typecheck or build."
+          COLOR: "16753920"
+          STATUS: "WARN"
+        run: bash scripts/notify-discord.sh
