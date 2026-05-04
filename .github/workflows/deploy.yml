@@ -97,9 +97,12 @@ jobs:
               fail=1
             fi
           done
-          # Pick a real slug from listing page to verify dynamic routes work
+          # Pick the first real slug from listing page to verify dynamic routes work.
+          # grep -oE prints one match per line, then read picks only the first
+          # without triggering SIGPIPE on upstream commands.
           slug=$(curl -sS -m 10 https://domexpert.online/properties/ \
-                 | grep -m 1 -oE 'href="/properties/[a-z0-9-]+/?"' \
+                 | grep -oE 'href="/properties/[a-z0-9-]+/?"' \
+                 | { IFS= read -r line; printf '%s' "$line"; cat >/dev/null; } \
                  | sed -E 's|href="/properties/([^/"]+)/?"|\1|')
           if [ -n "$slug" ]; then
             code=$(curl -sS -o /dev/null -m 10 -w "%{http_code}" "https://domexpert.online/properties/$slug/" || echo 000)
