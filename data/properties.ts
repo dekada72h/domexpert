@@ -1,8 +1,3 @@
-Generated 505 properties
-Districts: {'Stare Miasto': 15, 'Plac Solny': 15, 'Plac Powstańców': 15, 'Wyspa Piasek': 15, 'Nadodrze': 15, 'Karłowice': 16, 'Sępolno': 15, 'Biskupin': 15, 'Bartoszowice': 15, 'Krzyki': 15, 'Krzyki Górne': 15, 'Klecina': 16, 'Powstańców Śląskich': 16, 'Grabiszyn': 15, 'Borek': 15, 'Fabryczna': 15, 'Popowice': 15, 'Pilczyce': 16, 'Kuźniki': 15, 'Leśnica': 15, 'Psie Pole': 16, 'Zacisze': 16, 'Kowale': 15, 'Wojnów': 16, 'Zalesie': 15, 'Ołtaszyn': 16, 'Jagodno': 16, 'Wojszyce': 16, 'Brochów': 15, 'Plac Strzegomski': 15, 'Podwale': 15, 'Wybrzeże Wyspiańskiego': 15, 'Śródmieście': 15}
-Listings: {'sale': 252, 'rent': 253}
-Types: {'mieszkanie': 73, 'dom': 74, 'apartament': 72, 'loft': 71, 'kamienica': 73, 'kawalerka': 73, 'penthouse': 69}
-All 33 × 2 × 7 = 462 combos covered (+ extras for variety)
 /**
  * 505 nieruchomości w katalogu Dom Expert. Wrocław.
  * Auto-generated — every district has both sale + rent across multiple types.
