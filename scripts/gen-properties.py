@@ -252,33 +252,17 @@ def add_prop(district, listing, ptype):
     }
     properties.append(p)
 
-# Ensure every district has both sale+rent + variety
+# EXHAUSTIVE COVERAGE: every district × listing × type gets at least one property
+# This guarantees no filter combination returns 0 results, regardless of how
+# realistic the combo would be in the actual Wrocław real-estate market.
 for district in DISTRICTS:
-    # Pick which types fit this district (urban districts skip 'dom', suburbs prefer 'dom')
-    urban = ["Stare Miasto","Plac Solny","Plac Powstańców","Wyspa Piasek","Nadodrze","Plac Strzegomski","Podwale","Wybrzeże Wyspiańskiego","Śródmieście"]
-    suburban = ["Karłowice","Sępolno","Biskupin","Bartoszowice","Zacisze","Kowale","Wojnów","Zalesie","Ołtaszyn","Jagodno","Wojszyce","Brochów","Klecina","Pilczyce","Kuźniki","Leśnica"]
-    
-    if district in urban:
-        type_options_sale = ["apartament", "kamienica", "loft", "mieszkanie", "penthouse"]
-        type_options_rent = ["apartament", "kamienica", "kawalerka", "mieszkanie", "loft"]
-    elif district in suburban:
-        type_options_sale = ["dom", "mieszkanie", "apartament", "kawalerka"]
-        type_options_rent = ["dom", "mieszkanie", "kawalerka"]
-    else:
-        type_options_sale = ["mieszkanie", "apartament", "kawalerka", "loft"]
-        type_options_rent = ["mieszkanie", "kawalerka", "apartament"]
-    
-    # 1-3 sale
-    n_sale = random.randint(1, 3)
-    sale_types = random.sample(type_options_sale, min(n_sale, len(type_options_sale)))
-    for t in sale_types:
-        add_prop(district, "sale", t)
-    
-    # 1-2 rent
-    n_rent = random.randint(1, 2)
-    rent_types = random.sample(type_options_rent, min(n_rent, len(type_options_rent)))
-    for t in rent_types:
-        add_prop(district, "rent", t)
+    for listing in ["sale", "rent"]:
+        for ptype in TYPES:
+            add_prop(district, listing, ptype)
+    # Add 1-2 random extras per district for variety beyond the base coverage
+    extras = random.randint(1, 2)
+    for _ in range(extras):
+        add_prop(district, random.choice(["sale", "rent"]), random.choice(TYPES))
 
 print(f"Generated {len(properties)} properties", file=__import__("sys").stderr)
 
@@ -291,15 +275,18 @@ print(f"Districts: {dict(districts_count)}", file=__import__("sys").stderr)
 print(f"Listings: {dict(listings_count)}", file=__import__("sys").stderr)
 print(f"Types: {dict(types_count)}", file=__import__("sys").stderr)
 
-# Verify every district has both
+# Verify every district × listing × type combination has at least 1 property
 missing = []
 for d in DISTRICTS:
-    listings = set(p["listing"] for p in properties if p["district"] == d)
-    if "sale" not in listings: missing.append(f"{d}: missing sale")
-    if "rent" not in listings: missing.append(f"{d}: missing rent")
+    for listing in ["sale", "rent"]:
+        for ptype in TYPES:
+            n = sum(1 for p in properties if p["district"] == d and p["listing"] == listing and p["type"] == ptype)
+            if n == 0:
+                missing.append(f"{d} × {listing} × {ptype}")
 if missing:
-    print("MISSING:", missing, file=__import__("sys").stderr)
+    print("MISSING combos:", missing, file=__import__("sys").stderr)
     raise SystemExit(1)
+print(f"All {len(DISTRICTS)} × 2 × {len(TYPES)} = {len(DISTRICTS)*2*len(TYPES)} combos covered (+ extras for variety)", file=__import__("sys").stderr)
 
 # --- Emit TS file ---
 ts_lines = [
