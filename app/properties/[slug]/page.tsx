@@ -48,8 +48,58 @@ export default async function PropertyDetailPage({
   const isRent = property.listing === "rent";
   const priceText = isRent ? formatRent(property.price) : formatPLN(property.price);
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": isRent ? "RentAction" : "Product",
+    name: property.title,
+    description: property.description,
+    image: property.images,
+    ...(isRent
+      ? {
+          object: {
+            "@type": "Apartment",
+            name: property.title,
+            numberOfBedrooms: property.beds,
+            numberOfBathroomsTotal: property.baths,
+            floorSize: { "@type": "QuantitativeValue", unitCode: "MTK", value: property.area_m2 },
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Wrocław",
+              addressRegion: property.district,
+              addressCountry: "PL",
+            },
+          },
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: property.price,
+            priceCurrency: "PLN",
+            unitCode: "MON",
+          },
+        }
+      : {
+          offers: {
+            "@type": "Offer",
+            price: property.price,
+            priceCurrency: "PLN",
+            availability: "https://schema.org/InStock",
+            seller: { "@type": "RealEstateAgent", name: "Dom Expert", url: "https://domexpert.online" },
+          },
+          additionalProperty: [
+            { "@type": "PropertyValue", name: "beds",       value: property.beds },
+            { "@type": "PropertyValue", name: "baths",      value: property.baths },
+            { "@type": "PropertyValue", name: "area_m2",    value: property.area_m2 },
+            { "@type": "PropertyValue", name: "year_built", value: property.year_built },
+            { "@type": "PropertyValue", name: "district",   value: property.district },
+          ],
+        }),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <section className="pt-28 pb-6 lg:pt-36">
         <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
           <Link
