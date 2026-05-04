@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { StatCounter } from "@/components/stat-counter";
 import { MagneticButton } from "@/components/ui/magnetic-button";
+import { PROPERTIES } from "@/data/properties";
 
 const TEAM = [
   {
@@ -68,7 +69,7 @@ export default function AboutPage() {
           >
             <StatCounter value={9} suffix="+" label="Lat doświadczenia" />
             <StatCounter value={847} label="Sprzedanych w 2015-2025" />
-            <StatCounter value={32} label="Aktywnych ofert" />
+            <StatCounter value={PROPERTIES.length} label="Aktywnych ofert" />
             <StatCounter value={98} suffix="%" label="Zadowolonych klientów" />
           </motion.div>
         </div>

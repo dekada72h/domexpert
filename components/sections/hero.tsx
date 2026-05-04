@@ -6,6 +6,7 @@ import { ArrowRight, Search } from "lucide-react";
 import { StatCounter } from "@/components/stat-counter";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { DotPattern } from "@/components/ui/dot-pattern";
+import { PROPERTIES, DISTRICTS } from "@/data/properties";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -103,8 +104,8 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.45, ease: EASE }}
             className="mt-12 grid grid-cols-3 gap-6 max-w-md"
           >
-            <StatCounter value={32} label="Aktualnych ofert" />
-            <StatCounter value={15} suffix="+" label="Dzielnic Wrocławia" />
+            <StatCounter value={PROPERTIES.length} label="Aktualnych ofert" />
+            <StatCounter value={DISTRICTS.length} label="Dzielnic Wrocławia" />
             <StatCounter value={98} suffix="%" label="Zadowolonych klientów" />
           </motion.div>
         </div>
