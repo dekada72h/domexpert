@@ -88,7 +88,7 @@ jobs:
         run: |
           set -euo pipefail
           fail=0
-          for path in / /properties/ /about/ /contact/ /services/ /properties/apartament-stare-miasto-rynek/; do
+          for path in / /properties/ /about/ /contact/ /services/; do
             code=$(curl -sS -o /dev/null -m 10 -w "%{http_code}" "https://domexpert.online$path" || echo 000)
             if [ "$code" = "200" ]; then
               echo "  ✓ $path → $code"
@@ -97,12 +97,38 @@ jobs:
               fail=1
             fi
           done
+          # Pick a real slug from listing page to verify dynamic routes work
+          slug=$(curl -sS -m 10 https://domexpert.online/properties/ \
+                 | grep -oE 'href="/properties/[a-z0-9-]+/?"' \
+                 | head -1 | sed -E 's|href="/properties/([^/"]+)/?"|\1|')
+          if [ -n "$slug" ]; then
+            code=$(curl -sS -o /dev/null -m 10 -w "%{http_code}" "https://domexpert.online/properties/$slug/" || echo 000)
+            if [ "$code" = "200" ]; then
+              echo "  ✓ /properties/$slug/ → $code"
+            else
+              echo "  ✗ /properties/$slug/ → $code"
+              fail=1
+            fi
+          else
+            echo "  ✗ couldn't extract slug from /properties/"
+            fail=1
+          fi
           # Polish locale check
           lang=$(curl -sS -m 10 https://domexpert.online/ | grep -oE 'lang="[a-z]+"' | head -1)
           if [ "$lang" = 'lang="pl"' ]; then
             echo "  ✓ lang=pl"
           else
             echo "  ✗ lang check failed: $lang"
+            fail=1
+          fi
+          # Property count check (≥ 30 unique listings)
+          count=$(curl -sS -m 10 https://domexpert.online/properties/ \
+                  | grep -oE 'href="/properties/[a-z0-9-]+/?"' \
+                  | sort -u | wc -l)
+          if [ "$count" -ge 30 ]; then
+            echo "  ✓ properties listed: $count"
+          else
+            echo "  ✗ only $count properties (expected ≥30)"
             fail=1
           fi
           exit $fail
