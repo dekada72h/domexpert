@@ -17,7 +17,7 @@ const SERVICES = [
   {
     Icon: TrendingUp,
     title: "Konsulting inwestycyjny",
-    desc: "ROI, lokalizacja, perspektywy dzielnic. Pomożemy wybrać nieruchomość pod inwestycję długoterminową.",
+    desc: "ROI, lokalizacja, perspektywy osiedli. Pomożemy wybrać nieruchomość pod inwestycję długoterminową.",
   },
   {
     Icon: FileSearch,

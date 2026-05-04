@@ -71,7 +71,7 @@ export function Hero() {
           >
             Sprzedaż i wynajem mieszkań, apartamentów i domów we Wrocławiu —
             Stare Miasto, Krzyki, Sępolno, Karłowice. Eksperci, którzy znają
-            każdą dzielnicę.
+            każde osiedle.
           </motion.p>
 
           <motion.div
@@ -105,7 +105,7 @@ export function Hero() {
             className="mt-12 grid grid-cols-3 gap-6 max-w-md"
           >
             <StatCounter value={PROPERTIES.length} label="Aktualnych ofert" />
-            <StatCounter value={DISTRICTS.length} label="Dzielnic Wrocławia" />
+            <StatCounter value={DISTRICTS.length} label="Osiedli Wrocławia" />
             <StatCounter value={98} suffix="%" label="Zadowolonych klientów" />
           </motion.div>
         </div>

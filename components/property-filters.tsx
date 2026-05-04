@@ -65,7 +65,7 @@ export function PropertyFilters({
               type="search"
               value={filters.q}
               onChange={(e) => onChange({ ...filters, q: e.target.value })}
-              placeholder="Szukaj po dzielnicy, tytule, opisie..."
+              placeholder="Szukaj po osiedlu, tytule, opisie..."
               className="w-full pl-11 pr-4 py-3 rounded-full bg-white border border-ink/10 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
             />
           </label>
@@ -93,7 +93,7 @@ export function PropertyFilters({
             value={filters.district}
             onChange={(v) => onChange({ ...filters, district: v })}
             options={[
-              { value: "all", label: "Każda dzielnica" },
+              { value: "all", label: "Każde osiedle" },
               ...DISTRICTS.map((d) => ({ value: d, label: d })),
             ]}
           />

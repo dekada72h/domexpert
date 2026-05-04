@@ -13,7 +13,7 @@ export function Footer() {
           <p className="text-sm leading-relaxed">
             Premium nieruchomości we Wrocławiu. Sprzedaż, wynajem, konsultacje.
             Eksperci od ofert ekskluzywnych w Stare Miasto, Krzyki, Sępolno,
-            Karłowice i sąsiednich dzielnicach.
+            Karłowice i sąsiednich osiedlach.
           </p>
         </div>
 

@@ -28,7 +28,7 @@ export function FeaturedProperties() {
               Najnowsze nieruchomości
             </h2>
             <p className="mt-4 text-ink/65 text-lg">
-              Ręcznie wybrane oferty premium w najbardziej pożądanych dzielnicach Wrocławia.
+              Ręcznie wybrane oferty premium w najbardziej pożądanych osiedlach Wrocławia.
             </p>
           </div>
 

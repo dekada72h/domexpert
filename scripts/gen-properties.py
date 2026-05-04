@@ -64,7 +64,7 @@ FEATURES_POOL = {
 }
 
 SALE_DESC_TEMPLATES = [
-    "{type_label} w {district}, jedna z najbardziej pożądanych dzielnic Wrocławia. {feature_text} Stan: {condition}. Idealna inwestycja długoterminowa lub miejsce do życia.",
+    "{type_label} w {district} — jedno z najbardziej pożądanych osiedli Wrocławia. {feature_text} Stan: {condition}. Idealna inwestycja długoterminowa lub miejsce do życia.",
     "Wyjątkowa propozycja w sercu {district}. {feature_text} Po {renowation}. Doskonała lokalizacja — w pobliżu komunikacja, sklepy, szkoły, parki.",
     "Polecam ofertę w spokojnej części {district}. {feature_text} Świetna ekspozycja okien, wysoka jakość wykończenia. Gotowe do wprowadzenia.",
     "Klimatyczna nieruchomość w {district}. {feature_text} {condition}. Dobra cena za m² na lokalnym rynku. Możliwość negocjacji.",

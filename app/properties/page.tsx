@@ -42,7 +42,7 @@ export default function PropertiesPage() {
               <span className="text-gradient-shimmer">{PROPERTIES.length}</span> nieruchomości we Wrocławiu
             </h1>
             <p className="mt-4 max-w-2xl text-ink/65 text-lg">
-              Mieszkania, apartamenty, domy, lofty — na sprzedaż i wynajem. Filtruj po dzielnicy, typie i liczbie pokoi.
+              Mieszkania, apartamenty, domy, lofty — na sprzedaż i wynajem. Filtruj po osiedlu, typie i liczbie pokoi.
             </p>
           </motion.div>
         </div>

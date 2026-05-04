@@ -35,10 +35,10 @@ const SERVICES = [
   {
     Icon: TrendingUp,
     title: "Konsulting inwestycyjny",
-    desc: "Doradztwo dla inwestorów. Analiza dzielnic, ROI, perspektywy wzrostu cen. Pomożemy zbudować portfolio nieruchomości w Wrocławiu.",
+    desc: "Doradztwo dla inwestorów. Analiza osiedli, ROI, perspektywy wzrostu cen. Pomożemy zbudować portfolio nieruchomości w Wrocławiu.",
     bullets: [
       "Analiza ROI + Yield",
-      "Mapowanie rosnących dzielnic",
+      "Mapowanie rosnących osiedli",
       "Strategia: flipping vs buy-and-hold",
       "Optymalizacja podatkowa",
       "Współpraca z deweloperami",

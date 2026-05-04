@@ -32,7 +32,7 @@ const TEAM = [
 
 const VALUES = [
   { title: "Transparentność", desc: "Zero ukrytych prowizji. Wszystkie koszty na stole od pierwszej rozmowy." },
-  { title: "Lokalna ekspertyza", desc: "Znamy Wrocław na pamięć. Wiemy które dzielnice rosną, które stoją." },
+  { title: "Lokalna ekspertyza", desc: "Znamy Wrocław na pamięć. Wiemy które osiedla rosną, które stoją." },
   { title: "Pełna opieka", desc: "Od pierwszej oględzin do podpisu aktu — wszystko prowadzimy za Ciebie." },
   { title: "Premium standard", desc: "Tylko sprawdzone oferty. Zero spamu, zero straty czasu na fake listings." },
 ];
