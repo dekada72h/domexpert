@@ -86,7 +86,7 @@ export function Hero() {
                 className="group inline-flex items-center gap-2 px-7 py-4 rounded-full bg-gradient-primary text-white font-medium shadow-soft hover:shadow-glow transition-shadow"
               >
                 <Search className="w-5 h-5" />
-                Przeglądaj 32 oferty
+                Przeglądaj {PROPERTIES.length} ofert
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </MagneticButton>

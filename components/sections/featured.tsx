@@ -37,7 +37,7 @@ export function FeaturedProperties() {
               href="/properties"
               className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-ink text-white font-medium hover:bg-ink-soft transition-colors whitespace-nowrap"
             >
-              Wszystkie 32 oferty
+              Wszystkie {PROPERTIES.length} ofert
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </MagneticButton>
