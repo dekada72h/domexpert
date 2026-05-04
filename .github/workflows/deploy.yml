@@ -1,0 +1,129 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "app/**"
+      - "components/**"
+      - "data/**"
+      - "lib/**"
+      - "public/**"
+      - "next.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "tailwind.config.*"
+      - "postcss.config.*"
+      - "tsconfig.json"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-domexpert
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build (next build, no turbopack — output:export needs webpack)
+        run: npx next build
+
+      - name: Verify out/
+        run: |
+          set -euo pipefail
+          test -d out
+          test -f out/index.html
+          test -f out/properties/index.html
+          count=$(ls -d out/properties/*/ 2>/dev/null | wc -l)
+          if [ "$count" -lt 32 ]; then
+            echo "Expected ≥32 property pages, got $count"
+            exit 1
+          fi
+          echo "out/ size: $(du -sh out | cut -f1), property pages: $count"
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Add VPS to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Pre-flight — staging dir
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} 'mkdir -p /tmp/domexpert-staged'
+
+      - name: Rsync to staging
+        run: |
+          rsync -az --delete out/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/tmp/domexpert-staged/
+
+      - name: Promote to live + reload nginx
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} 'bash -s' <<'EOF'
+            set -euo pipefail
+            sudo -n rsync -a --delete /tmp/domexpert-staged/ /srv/sites/domexpert.online/html/
+            sudo -n docker exec domexpert-online nginx -s reload
+            echo "Live size: $(sudo du -sh /srv/sites/domexpert.online/html/ | cut -f1)"
+          EOF
+
+      - name: Smoke test
+        run: |
+          set -euo pipefail
+          fail=0
+          for path in / /properties/ /about/ /contact/ /services/ /properties/apartament-stare-miasto-rynek/; do
+            code=$(curl -sS -o /dev/null -m 10 -w "%{http_code}" "https://domexpert.online$path" || echo 000)
+            if [ "$code" = "200" ]; then
+              echo "  ✓ $path → $code"
+            else
+              echo "  ✗ $path → $code"
+              fail=1
+            fi
+          done
+          # Polish locale check
+          lang=$(curl -sS -m 10 https://domexpert.online/ | grep -oE 'lang="[a-z]+"' | head -1)
+          if [ "$lang" = 'lang="pl"' ]; then
+            echo "  ✓ lang=pl"
+          else
+            echo "  ✗ lang check failed: $lang"
+            fail=1
+          fi
+          exit $fail
+
+  notify-failure:
+    needs: build-deploy
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Discord notification
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          GH_REPO: ${{ github.repository }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_BRANCH: ${{ github.ref_name }}
+          GH_SHA: ${{ github.sha }}
+          GH_ACTOR: ${{ github.actor }}
+          ICON: "🚨"
+          TITLE: "DomExpert Deploy FAILED"
+          SUBTITLE: "domexpert.online may be stale or broken — smoke test failed."
+          COLOR: "15548997"
+          STATUS: "FAILED"
+        run: bash scripts/notify-discord.sh

@@ -7,10 +7,26 @@ import { StatCounter } from "@/components/stat-counter";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 
 const TEAM = [
-  { name: "Anna Kowalska", role: "Senior Property Advisor", initials: "AK" },
-  { name: "Marek Nowak", role: "Inwestycje + flipping", initials: "MN" },
-  { name: "Joanna Wiśniewska", role: "Wynajem długoterminowy", initials: "JW" },
-  { name: "Tomasz Jankowski", role: "Konsultant kredytowy", initials: "TJ" },
+  {
+    name: "Anna Kowalska",
+    role: "Senior Property Advisor",
+    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80&auto=format&fit=crop",
+  },
+  {
+    name: "Marek Nowak",
+    role: "Inwestycje + flipping",
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop",
+  },
+  {
+    name: "Joanna Wiśniewska",
+    role: "Wynajem długoterminowy",
+    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=80&auto=format&fit=crop",
+  },
+  {
+    name: "Tomasz Jankowski",
+    role: "Konsultant kredytowy",
+    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&auto=format&fit=crop",
+  },
 ];
 
 const VALUES = [
@@ -114,10 +130,14 @@ export default function AboutPage() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 whileHover={{ y: -6 }}
-                className="text-center"
+                className="text-center group"
               >
-                <div className="aspect-square rounded-2xl bg-gradient-primary flex items-center justify-center font-display font-bold text-5xl text-white mb-4 shadow-soft">
-                  {m.initials}
+                <div className="aspect-square rounded-2xl mb-4 shadow-soft overflow-hidden relative bg-gradient-primary">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                    style={{ backgroundImage: `url(${m.photo})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <h3 className="font-display font-semibold text-lg text-ink">{m.name}</h3>
                 <p className="text-sm text-ink/60">{m.role}</p>
